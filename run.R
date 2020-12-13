@@ -10,6 +10,10 @@ library(ggplot2)
 source("train.R")
 source("infer.R")
 
+# Default: use trained model and don't write reseults
+use.trained.model<-TRUE
+write.results.to.file<-FALSE
+
 # Thresholds of clustering for each layer in phylogenin tree
 thresholds<-c(0.3, 0.1, 0.05, 0.01, 0.005)
 n.trees<-100
@@ -27,44 +31,54 @@ test.dir<-"test_data"
 #  Use fitted model
 ######################################################################
 
-fit.model<-readRDS("fitted_model_for_DREAM_challenge.rds")
-n.trees<-100
+if(use.trained.model){
+  fit.model<-readRDS("fitted_model_for_DREAM_challenge.rds")
+  n.trees<-100
+}
 
 ######################################################################
 #  or train model on data
 ######################################################################
 
-training_data <- read.table(train.set, header=T, colClasses = "character")
+if(!(use.trained.model)){
+  start_time = Sys.time()
 
-ls.tr<-list.files(train.dir)
-n.train<-length(ls.tr)
+  training_data <- read.table(train.set, header=T, colClasses = "character")
 
-train<-list("NA", n.train)
-for(i in 1:n.train){
-  file<-paste0(train.dir,"/sub1_train_",i,".txt")
-  tmp<-read.table(file, header=T, colClasses="character")
-  train[[i]]<-tmp
-}
+  ls.tr<-list.files(train.dir)
+  n.train<-length(ls.tr)
 
-# Find twin cells
-train.tw<-twin.cells(training_data)
+  train<-list("NA", n.train)
+  for(i in 1:n.train){
+    file<-paste0(train.dir,"/sub1_train_",i,".txt")
+    tmp<-read.table(file, header=T, colClasses="character")
+    train[[i]]<-tmp
+  }
 
-# The rest of cells
-train.ntw<-not.twin.cells(train.tw, train)
+  # Find twin cells
+  train.tw<-twin.cells(training_data)
 
-#  All training data
-train.all<-rbind(train.tw, train.ntw)
+  # The rest of cells
+  train.ntw<-not.twin.cells(train.tw, train)
 
-fit.model <- gbm(
-  formula = rf ~ .,
-  data = train.all,
-  distribution = "bernoulli",
-  n.trees = n.trees,
-  interaction.depth = 1,
-  n.minobsinnode = 3,
-  cv.folds = 5,
-  verbose = FALSE
-)  	
+  #  All training data
+  train.all<-rbind(train.tw, train.ntw)
+
+  fit.model <- gbm(
+    formula = rf ~ .,
+    data = train.all,
+    distribution = "bernoulli",
+    n.trees = n.trees,
+    interaction.depth = 1,
+    n.minobsinnode = 3,
+    cv.folds = 5,
+    verbose = FALSE
+  )  	
+
+  end_time = Sys.time()
+  train_timing<-end_time-start_time
+  cat(c("Time taken for training: ", train_timing, "secs\n"))
+
 
 ######################################################################
 #  Plot how good the method predicting training data
@@ -76,10 +90,12 @@ pred.ntw<-predict(fit.model, train.ntw, n.trees=n.trees, type='response')
 pred.tr<-rbind(data.frame(obs="twins", pred=pred.tw), data.frame(obs="not.twins", pred=pred.ntw))
 pred.tr$obs<-as.factor(pred.tr$obs)
 ggplot(pred.tr, aes(obs, pred)) + geom_boxplot(color="blue") + xlab("Truth") + ylab("Prob. cells are twins")
+}
 
 ######################################################################
 #  Make predictions 
 ######################################################################
+start_time = Sys.time()
 
 ls.ts<-list.files(test.dir)
 n.test<-length(ls.ts)
@@ -92,8 +108,11 @@ for(i in 1:n.test){
   plot(read.newick(text = lng), main=paste0('Test: ',i))
 }
 
+end_time = Sys.time()
+test_timing<-end_time-start_time
+cat(c("Time taken for predictions: ", test_timing, "secs\n"))
+
 ######################################################################
 #  Write results 
 ######################################################################
-
-write.table(ans, file="Results.txt",sep = "\t", row.names = F)    
+if(write.results.to.file) write.table(ans, file="Results.txt",sep = "\t", row.names = F)    
