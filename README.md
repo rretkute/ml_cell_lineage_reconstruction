@@ -1,7 +1,7 @@
 # Using Machine Learning (ML) for cell lineage reconstruction
 Renata Retkute (rr614@cam.ac.uk), Alidivinas Prusokas and Augustinas Prusokas
 
-This is the submission to Allen Institute Cell Lineage Reconstruction DREAM Challenge https://www.synapse.org/#!Synapse:syn20692755/wiki/595096
+This is team AMbeRland submission to Allen Institute Cell Lineage Reconstruction DREAM Challenge https://www.synapse.org/#!Synapse:syn20692755/wiki/
 
 ## Methods
 We used  Generalized Boosted Regression (GBR)  model to predict the probabilities that two cells are sisters, and custom clustering algorithm, to partition cells into lineages based on these probabilities.  
@@ -22,9 +22,9 @@ All calculations were performed in R using package gbm https://cran.r-project.or
 Following options were used to train Generalized Boosted Regression model:
 - distribution = "bernoulli",
 -  n.trees = 100,
--    interaction.depth = 1,
+-  interaction.depth = 1,
 -  n.minobsinnode = 3,
--    cv.folds = 5.
+-  cv.folds = 5.
 
 ## Usage
 To reproduce AMbeRland's submission for Subchallenge 1:
