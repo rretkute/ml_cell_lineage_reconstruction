@@ -11,13 +11,14 @@ As a predictors, we have chosen the following features based on pairwise compari
 - number of recorded units which have  the same mutation;
 - number of recorded units which have  single mutation;
 - number of recorded units which have different mutations. 
+
 The status  was set to 1 if two cells were sister cells and to 0 if observed two cells were not sister cells. We included only those pairs with status 0, that have not already been included with status 1.  We assumed only binary trees.
 
 ## Details
 All calculations were performed in R using package gbm https://cran.r-project.org/web/packages/gbm/index.html.
 Following options were used to train Generalized Boosted Regression model:
 - distribution = "bernoulli",
-  -  n.trees = 100,
+-  n.trees = 100,
 -    interaction.depth = 1,
 -  n.minobsinnode = 3,
 -    cv.folds = 5.
@@ -28,9 +29,11 @@ To reproduce AMbeRland's submission for Subchallenge 1:
     Rscript run.R
 
 By default, the code will use fitted model. To fit the model based on training data, change:
+
       use.trained.model<-FALSE
     
 To write results into spreadsheet, change:
-     write.results.to.file<-TRUE
+
+      write.results.to.file<-TRUE
 
     
