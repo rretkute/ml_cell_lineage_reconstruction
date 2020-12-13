@@ -37,15 +37,10 @@ test.dir<-"test_data"
 #  Fitted model
 ######################################################################
 
-fit.model<-readRDS("fitted_model_for_DREAM_challenge.rds")
-n.trees<-100
-
-
 
 ls.tr<-list.files(train.dir)
 n.train<-length(ls.tr)
 
-thresholds<-c(0.3, 0.1, 0.05, 0.01, 0.005)
 i<-1
   xx <- read.table(paste0(train.dir, "/sub1_train_",i,".txt"), header=T, colClasses="character")
   lng<-  make.lineage(xx, fit.model, thresholds, n.trees)
