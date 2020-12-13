@@ -1,4 +1,4 @@
-# Reconstruction of an in vitro cell lineages 
+# Using Machine Learning (ML) for cell lineage reconstruction
 Renata Retkute (rr614@cam.ac.uk)
 
 Department of Plant Sciences, University of Cambridge, Downing Street, Cambridge
