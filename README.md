@@ -14,6 +14,9 @@ As a predictors, we have chosen the following features based on pairwise compari
 
 The status  was set to 1 if two cells were sister cells and to 0 if observed two cells were not sister cells. We included only those pairs with status 0, that have not already been included with status 1.  We assumed only binary trees.
 
+Figure 1. Approache for learning from the DREAM Challenge training data. .
+![](AMbeRland_Method.png)
+
 ## Details
 All calculations were performed in R using package gbm https://cran.r-project.org/web/packages/gbm/index.html.
 Following options were used to train Generalized Boosted Regression model:
