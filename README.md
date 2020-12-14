@@ -26,11 +26,12 @@ Following options were used to train Generalized Boosted Regression model:
 -  cv.folds = 5.
 
 ## Clustering
-During the tree construction, the ground truth was used to evaluate a set of decreasing thresholds corresponding to how any two individual clusters of cells were related at different levels of the lineage tree. The clustering starts at the lowest tree level, where all possible pairs of cells are ranked according to the predicted probability that they are sisters. At each consecutive level, pairwise comparison is performed between each lower level cluster by calculating the maximum probability between any elements of two clusters. Pairs of clusters are ordered again according to this probability and are assumed to have the same parent-node if it’s value is above the estimated threshold for this level. This process was repeated until one or two clusters were left.
+ The clustering starts at the lowest tree level, where all possible pairs of cells are ranked according to the predicted probability that they are sisters. At each consecutive level, pairwise comparison is performed between each lower level cluster by calculating the maximum probability between any elements of two clusters. Pairs of clusters are ordered again according to this probability and are assumed to have the same parent-node if it’s value is above the estimated threshold for this level. This process was repeated until one or two clusters were left.
 
 Figure 2. AMbeRland approach for clustetering cells based on predicted probabilities that cells are sister cells.
 ![](AMbeRland_Clustering.png)
 
+During the tree construction, the ground truth was used to evaluate a set of decreasing thresholds corresponding to how any two individual clusters of cells were related at different levels of the lineage tree.
 
 ## Usage
 To reproduce AMbeRland's submission for Subchallenge 1:
