@@ -17,13 +17,6 @@ The status  was set to 1 if two cells were sister cells and to 0 if observed two
 Figure 1. AMbeRland approach for learning features from the DREAM Challenge training data.
 ![](AMbeRland_Method.png)
 
-## Clustering
-The clustering starts at the lowest tree level, where all possible pairs of cells are ranked according to the predicted probability that they are sisters. At each consecutive level, pairwise comparison is performed between each lower level cluster by calculating the maximum probability between any elements of two clusters. Pairs of clusters are ordered again according to this probability and are assumed to have the same parent-node if it’s value is above the estimated threshold for this level. This process was repeated until one or two clusters were left.
-
-Figure 2. AMbeRland approach for clustetering cells based on predicted probabilities that cells are sister cells.
-![](AMbeRland_Clustering.png)
-
-## Details
 All calculations were performed in R using package gbm https://cran.r-project.org/web/packages/gbm/index.html.
 Following options were used to train Generalized Boosted Regression model:
 - distribution = "bernoulli",
@@ -31,6 +24,13 @@ Following options were used to train Generalized Boosted Regression model:
 -  interaction.depth = 1,
 -  n.minobsinnode = 3,
 -  cv.folds = 5.
+
+## Clustering
+The clustering starts at the lowest tree level, where all possible pairs of cells are ranked according to the predicted probability that they are sisters. At each consecutive level, pairwise comparison is performed between each lower level cluster by calculating the maximum probability between any elements of two clusters. Pairs of clusters are ordered again according to this probability and are assumed to have the same parent-node if it’s value is above the estimated threshold for this level. This process was repeated until one or two clusters were left.
+
+Figure 2. AMbeRland approach for clustetering cells based on predicted probabilities that cells are sister cells.
+![](AMbeRland_Clustering.png)
+
 
 ## Usage
 To reproduce AMbeRland's submission for Subchallenge 1:
