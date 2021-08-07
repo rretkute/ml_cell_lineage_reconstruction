@@ -3,6 +3,8 @@ Renata Retkute (rr614@cam.ac.uk), Alidivinas Prusokas and Augustinas Prusokas
 
 This is team AMbeRland submission to Allen Institute Cell Lineage Reconstruction DREAM Challenge https://www.synapse.org/#!Synapse:syn20692755/wiki/
 
+The results have been published Gong et al. 2021, Cell Systems ["Benchmarked approaches for reconstruction of in vitro cell lineages and in silico models of C. elegans and M. musculus developmental trees"](https://www.sciencedirect.com/science/article/pii/S2405471221001940)
+
 ## ML set up
 We used  Generalized Boosted Regression (GBR)  model to predict the probabilities that two cells are sisters, and custom clustering algorithm, to partition cells into lineages based on these probabilities.  
 
